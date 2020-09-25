@@ -1,0 +1,90 @@
+<div id="top"></div>
+
+# AElf Contract Protocol Documentation
+
+{{range .Files}}
+{{$namespace := .Option "csharp_namespace"}}
+{{if $namespace }}
+[{{.Option "csharp_namespace"}}](#{{.Option "csharp_namespace"}})
+{{end}}
+{{end}}
+
+{{range .Files}}
+{{$file_name := .Name}}
+<a name="{{.Name}}"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## {{.Option "csharp_namespace"}}
+{{.Description}}
+
+{{range .Services}}
+<div name="{{.FullName}}"></div>
+
+### The mehtod of contract
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+{{range .Methods -}}
+  | {{.Name}} | [{{.RequestLongType}}](#{{.RequestFullType}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseLongType}}](#{{.ResponseFullType}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
+{{end}}
+{{end}} <!-- end services -->
+
+### The type of contract
+{{range .Messages}}
+<div id="{{.FullName}}"></div>
+
+### {{.FullName}}
+{{.Description}}
+
+{{if .HasFields}}
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+{{range .Fields -}}
+  | {{.Name}} | [{{.LongType}}](#{{.FullType}}) | {{.Label}} | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+{{end}}
+{{end}}
+
+{{if .HasExtensions}}
+| Extension | Type | Base | Number | Description |
+| --------- | ---- | ---- | ------ | ----------- |
+{{range .Extensions -}}
+  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+{{end}}
+{{end}}
+
+{{end}} <!-- end messages -->
+
+{{range .Enums}}
+<div id="{{.FullName}}"></div>
+
+### {{.FullName}}
+{{.Description}}
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+{{range .Values -}}
+  | {{.Name}} | {{.Number}} | {{nobr .Description}} |
+{{end}}
+
+{{end}} <!-- end enums -->
+
+{{if .HasExtensions}}
+<a name="{{$file_name}}-extensions"></a>
+
+### File-level Extensions
+| Extension | Type | Base | Number | Description |
+| --------- | ---- | ---- | ------ | ----------- |
+{{range .Extensions -}}
+  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: `{{.DefaultValue}}`{{end}} |
+{{end}}
+{{end}} <!-- end HasExtensions -->
+
+{{end}}
+
+## Scalar Value Types
+
+| .proto Type | Notes | C++ | Java | Python | Go | C# | PHP | Ruby |
+| ----------- | ----- | --- | ---- | ------ | -- | -- | --- | ---- |
+{{range .Scalars -}}
+  | <div id="{{.ProtoType}}" /> {{.ProtoType}} | {{.Notes}} | {{.CppType}} | {{.JavaType}} | {{.PythonType}} | {{.GoType}} | {{.CSharp}} | {{.PhpType}} | {{.RubyType}} |
+{{end}}
