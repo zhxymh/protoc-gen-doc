@@ -118,6 +118,8 @@ func extractOptions(opts commonOptions) map[string]interface{} {
 		if opts != nil && opts.IdempotencyLevel != nil {
 			out["idempotency_level"] = opts.IdempotencyLevel.String()
 		}
+	case *descriptor.FileOptions:
+		out["csharp_namespace"] = opts.GetCsharpNamespace()
 	}
 	return out
 }
