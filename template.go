@@ -150,6 +150,13 @@ type File struct {
 // Option returns the named option.
 func (f File) Option(name string) interface{} { return f.Options[name] }
 
+func (f File) IsContractImp() interface{} { return strings.HasSuffix(f.Name, "_impl.proto") }
+
+func (f File) IsContractBase() interface{} {
+	namespace := f.Option("csharp_namespace")
+	return !strings.HasSuffix(f.Name, "_impl.proto") && strings.HasPrefix(namespace.(string), "AElf.Contracts")
+}
+
 // FileExtension contains details about top-level extensions within a proto(2) file.
 type FileExtension struct {
 	Name               string `json:"name"`

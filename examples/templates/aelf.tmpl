@@ -2,31 +2,34 @@
 
 # AElf Contract Protocol Documentation
 
+{{$imp := ""}}
+
 {{range .Files}}
+{{if .IsContractImp}}
 {{$namespace := .Option "csharp_namespace"}}
 {{if $namespace }}
-{{$l := len $namespace}}
-{{if gt $l 15}}
-{{$prefix := slice $namespace 0 14}}
-{{if eq $prefix "AElf.Standards" "AElf.Contracts"}}
 [{{.Option "csharp_namespace"}}](#{{.Option "csharp_namespace"}})
-{{end}}
 {{end}}
 {{end}}
 {{end}}
 
 {{range .Files}}
 {{$file_name := .Name}}
+{{if .IsContractImp}}
+
 <a name="{{.Name}}"></a>
 <p align="right"><a href="#top">Top</a></p>
 
 ## {{.Option "csharp_namespace"}}
 {{.Description}}
 
+{{end}}
+
+{{if .IsContractBase}}
+
 {{range .Services}}
 <div name="{{.FullName}}"></div>
-
-### The mehtod of contract
+{{.Description}}
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
@@ -35,7 +38,8 @@
 {{end}}
 {{end}} <!-- end services -->
 
-### The type of contract
+{{end}}
+
 {{range .Messages}}
 <div id="{{.FullName}}"></div>
 
@@ -86,6 +90,7 @@
 {{end}} <!-- end HasExtensions -->
 
 {{end}}
+
 
 ## Scalar Value Types
 
