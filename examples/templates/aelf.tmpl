@@ -5,7 +5,13 @@
 {{range .Files}}
 {{$namespace := .Option "csharp_namespace"}}
 {{if $namespace }}
+{{$l := len $namespace}}
+{{if gt $l 15}}
+{{$prefix := slice $namespace 0 14}}
+{{if eq $prefix "AElf.Standards" "AElf.Contracts"}}
 [{{.Option "csharp_namespace"}}](#{{.Option "csharp_namespace"}})
+{{end}}
+{{end}}
 {{end}}
 {{end}}
 
