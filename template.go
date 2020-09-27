@@ -157,6 +157,11 @@ func (f File) IsContractBase() interface{} {
 	return !strings.HasSuffix(f.Name, "_impl.proto") && strings.HasPrefix(namespace.(string), "AElf.Contracts")
 }
 
+func (f File) IsContractStandard() interface{} {
+	namespace := f.Option("csharp_namespace")
+	return strings.HasPrefix(namespace.(string), "AElf.Standards")
+}
+
 // FileExtension contains details about top-level extensions within a proto(2) file.
 type FileExtension struct {
 	Name               string `json:"name"`

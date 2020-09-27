@@ -2,10 +2,8 @@
 
 # AElf Contract Protocol Documentation
 
-{{$imp := ""}}
-
 {{range .Files}}
-{{if .IsContractImp}}
+{{if (or .IsContractImp .IsContractStandard)}}
 {{$namespace := .Option "csharp_namespace"}}
 {{if $namespace }}
 [{{.Option "csharp_namespace"}}](#{{.Option "csharp_namespace"}})
@@ -15,7 +13,7 @@
 
 {{range .Files}}
 {{$file_name := .Name}}
-{{if .IsContractImp}}
+{{if (or .IsContractImp .IsContractStandard)}}
 
 <a name="{{.Name}}"></a>
 <p align="right"><a href="#top">Top</a></p>
@@ -25,7 +23,7 @@
 
 {{end}}
 
-{{if .IsContractBase}}
+{{if (or .IsContractBase .IsContractStandard)}}
 
 {{range .Services}}
 <div name="{{.FullName}}"></div>
