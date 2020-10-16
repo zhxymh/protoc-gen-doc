@@ -1,42 +1,23 @@
-<div id="top"></div>
 
-# AElf Contract Protocol Documentation
-
-{{range .Files}}
-{{if (or .IsContractImp .IsContractStandard)}}
-{{$namespace := .Option "csharp_namespace"}}
-{{if $namespace }}
-[{{.Option "csharp_namespace"}}](#{{.Option "csharp_namespace"}})
-{{end}}
-{{end}}
-{{end}}
-
-{{range .Files}}
-{{$file_name := .Name}}
-{{if (or .IsContractImp .IsContractStandard)}}
+{{range .Files -}}
+{{if .IsContractImp}}
 
 <a name="{{.Name}}"></a>
-<p align="right"><a href="#top">Top</a></p>
 
 ## {{.Option "csharp_namespace"}}
 {{.Description}}
 
-{{end}}
-
-{{if (or .IsContractBase .IsContractStandard)}}
-
-{{range .Services}}
-<div name="{{.FullName}}"></div>
-{{.Description}}
-
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+{{end}}
+{{range .Services -}}
 {{range .Methods -}}
   | {{.Name}} | [{{.RequestLongType}}](#{{.RequestFullType}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseLongType}}](#{{.ResponseFullType}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
 {{end}}
-{{end}} <!-- end services -->
-
 {{end}}
+{{end}}
+
+{{range .Files}}
 
 {{range .Messages}}
 <div id="{{.FullName}}"></div>
@@ -77,8 +58,6 @@
 {{end}} <!-- end enums -->
 
 {{if .HasExtensions}}
-<a name="{{$file_name}}-extensions"></a>
-
 ### File-level Extensions
 | Extension | Type | Base | Number | Description |
 | --------- | ---- | ---- | ------ | ----------- |
