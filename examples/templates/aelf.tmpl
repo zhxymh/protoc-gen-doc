@@ -1,9 +1,5 @@
-
 {{range .Files -}}
 {{if .IsContractImp}}
-
-<a name="{{.Name}}"></a>
-
 ## {{.Option "csharp_namespace"}}
 {{.Description}}
 
@@ -12,7 +8,7 @@
 {{end}}
 {{range .Services -}}
 {{range .Methods -}}
-  | {{.Name}} | [{{.RequestLongType}}](#{{.RequestFullType}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseLongType}}](#{{.ResponseFullType}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
+  | {{.Name}} | [{{.RequestFullType}}](#{{.RequestFullType}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseFullType}}](#{{.ResponseFullType}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
 {{end}}
 {{end}}
 {{end}}
@@ -22,7 +18,7 @@
 {{range .Messages}}
 <div id="{{.FullName}}"></div>
 
-### {{.FullName}}
+##### {{.FullName}}
 {{.Description}}
 
 {{if .HasFields}}
@@ -46,7 +42,7 @@
 {{range .Enums}}
 <div id="{{.FullName}}"></div>
 
-### {{.FullName}}
+##### {{.FullName}}
 {{.Description}}
 
 | Name | Number | Description |
@@ -58,7 +54,7 @@
 {{end}} <!-- end enums -->
 
 {{if .HasExtensions}}
-### File-level Extensions
+##### File-level Extensions
 | Extension | Type | Base | Number | Description |
 | --------- | ---- | ---- | ------ | ----------- |
 {{range .Extensions -}}
@@ -66,13 +62,4 @@
 {{end}}
 {{end}} <!-- end HasExtensions -->
 
-{{end}}
-
-
-## Scalar Value Types
-
-| .proto Type | Notes | C++ | Java | Python | Go | C# | PHP | Ruby |
-| ----------- | ----- | --- | ---- | ------ | -- | -- | --- | ---- |
-{{range .Scalars -}}
-  | <div id="{{.ProtoType}}" /> {{.ProtoType}} | {{.Notes}} | {{.CppType}} | {{.JavaType}} | {{.PythonType}} | {{.GoType}} | {{.CSharp}} | {{.PhpType}} | {{.RubyType}} |
 {{end}}
