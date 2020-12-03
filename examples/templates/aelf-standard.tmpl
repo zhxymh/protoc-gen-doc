@@ -1,0 +1,69 @@
+{{range .Files -}}
+{{if .IsContractStandard}}
+## {{.Option "csharp_namespace"}}
+{{.Description}}
+
+### Methods
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+{{end}}
+{{range .Services -}}
+{{range .Methods -}}
+  | {{.Name}} | [{{.RequestFullType}}](#{{.RequestFullType}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseFullType}}](#{{.ResponseFullType}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
+{{end}}
+{{end}}
+
+{{end}}
+
+### Types
+
+{{range .Files}}
+
+{{range .Messages}}
+<div id="{{.FullName}}"></div>
+
+#### {{.FullName}}
+{{.Description}}
+
+{{if .HasFields}}
+| Field | Type | Description | Label |
+| ----- | ---- | ----------- | ----- |
+{{range .Fields -}}
+  | {{.Name}} | [{{.LongType}}](#{{.FullType}}) | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} | {{.Label}} |
+{{end}}
+{{end}}
+
+{{if .HasExtensions}}
+| Extension | Type | Base | Number | Description |
+| --------- | ---- | ---- | ------ | ----------- |
+{{range .Extensions -}}
+  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+{{end}}
+{{end}}
+
+{{end}}
+
+{{range .Enums}}
+<div id="{{.FullName}}"></div>
+
+#### {{.FullName}}
+{{.Description}}
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+{{range .Values -}}
+  | {{.Name}} | {{.Number}} | {{nobr .Description}} |
+{{end}}
+
+{{end}}
+
+{{if .HasExtensions}}
+#### File-level Extensions
+| Extension | Type | Base | Number | Description |
+| --------- | ---- | ---- | ------ | ----------- |
+{{range .Extensions -}}
+  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: `{{.DefaultValue}}`{{end}} |
+{{end}}
+{{end}} 
+
+{{end}}
